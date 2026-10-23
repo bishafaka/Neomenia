@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5394113306982218197}
   m_Father: {fileID: 0}
@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7bc86ae3201fe40a36c0146bab895c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemBehaviour
+  amount: 1
   item: {fileID: 11400000, guid: 25044cb8bd4d64e4486d8e2db4dd8270, type: 2}
   spriteRenderer: {fileID: 2942117832496119895}
 --- !u!1 &8384874075172733507
