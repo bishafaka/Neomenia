@@ -84,7 +84,7 @@ public class InputManager : MonoBehaviour
     void OnSprintStarted(InputAction.CallbackContext ctx) => SprintPressed?.Invoke();
     void OnSprintCanceled(InputAction.CallbackContext ctx) => SprintReleased?.Invoke();
     void OnPauseStarted(InputAction.CallbackContext ctx) => PausePressed?.Invoke();
-    void OnInventoryStarted(InputAction.CallbackContext ctx) => PausePressed?.Invoke();
+    void OnInventoryStarted(InputAction.CallbackContext ctx) => InventoryPressed?.Invoke();
     public void SetPlayerStatePlayer()
     {
         Player=PlayerState.Player;
