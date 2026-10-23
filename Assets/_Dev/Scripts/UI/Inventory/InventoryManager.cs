@@ -4,7 +4,7 @@ public class InventoryManager : MonoBehaviour
 {
 	public GameObject inventoryItemPrefab;
 	public InventorySlot[] InventorySlots;
-	public bool AddItem(Item item)
+	public bool AddItem(Item item, int quantity=1)
 	{
 		for(int i=0; i<InventorySlots.Length; i++)
 		{
@@ -15,6 +15,11 @@ public class InventoryManager : MonoBehaviour
 				SpawnItem(item, slot);
 				return true;
 			}
+			if(itemInSlot.item==item && itemInSlot.amount+quantity<=item.maxStack)
+			{
+                SpawnItem(item, slot);
+                return true;
+            }
 		}
 		return false;
 	}

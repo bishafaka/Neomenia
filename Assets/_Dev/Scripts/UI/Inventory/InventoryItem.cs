@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -5,11 +6,15 @@ using UnityEngine.UI;
 public class InventoryItem : DraggableUIElement
 {
     [SerializeField] Image image;
+    [SerializeField] TextMeshProUGUI stack;
     [HideInInspector] public Item item;
+    [HideInInspector] public int amount=0;
     [HideInInspector] public Transform parentOnEndDrag;
-    public void InitItem(Item newItem)
+    public void InitItem(Item newItem, int quantity=1)
     {
         item=newItem;
+        amount+=quantity;
+        stack.text=amount.ToString();
         image.sprite=newItem.icon;
     }
     public override void Awake()
