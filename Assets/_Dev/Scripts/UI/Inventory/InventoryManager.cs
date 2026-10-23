@@ -6,27 +6,30 @@ public class InventoryManager : MonoBehaviour
 	public InventorySlot[] InventorySlots;
 	public bool AddItem(Item item, int quantity=1)
 	{
-		for(int i=0; i<InventorySlots.Length; i++)
+		foreach (InventorySlot slot in InventorySlots)
 		{
-			InventorySlot slot=InventorySlots[i];
+			InventoryItem itemInSlot=slot.GetComponentInChildren<InventoryItem>();
+			if(itemInSlot!=null && itemInSlot.item==item && itemInSlot.amount+quantity<=item.maxStack)
+			{
+				itemInSlot.UpdateAmount(quantity);
+				return true;
+			}
+		}
+		foreach (InventorySlot slot in InventorySlots)
+		{
 			InventoryItem itemInSlot=slot.GetComponentInChildren<InventoryItem>();
 			if(itemInSlot==null)
 			{
-				SpawnItem(item, slot);
+				SpawnItem(item, slot, quantity);
 				return true;
 			}
-			if(itemInSlot.item==item && itemInSlot.amount+quantity<=item.maxStack)
-			{
-                SpawnItem(item, slot);
-                return true;
-            }
 		}
 		return false;
 	}
-	void SpawnItem(Item item, InventorySlot slot)
+	void SpawnItem(Item item, InventorySlot slot, int quantity)
 	{
 		GameObject newItem=Instantiate(inventoryItemPrefab, slot.transform);
 		InventoryItem inventoryItem=newItem.GetComponent<InventoryItem>();
-		inventoryItem.InitItem(item);
+		inventoryItem.InitItem(item, quantity);
 	}
 }
