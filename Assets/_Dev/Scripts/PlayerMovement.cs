@@ -14,10 +14,10 @@ public class PlayerMovement : MonoBehaviour
         if(InputManager.Instance!=null)
             InputManager.Instance.Move-=OnMove;
     }
-    void Update()
+    void FixedUpdate()
     {
         Vector3 movement=new Vector3(input.x, 0, input.y).normalized;
-        transform.position+=movement*speed*Time.deltaTime;
+        transform.position+=movement*speed*Time.fixedDeltaTime;
     }
     void OnMove(Vector2 dir) => input=dir;
 }
