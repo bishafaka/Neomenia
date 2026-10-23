@@ -2,10 +2,21 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-	[SerializeField] GameObject inventory;
+    public static UIManager Instance { get; private set; }
+    public InventoryManager inventoryManager;
+    [Header("Panels")]
+    [SerializeField] GameObject inventory;
 	void Awake()
 	{
-		if(inventory!=null)
+        if(Instance==null)
+        {
+            Instance=this;
+            DontDestroyOnLoad(this);
+        }
+        else
+            Destroy(gameObject);
+
+        if (inventory!=null)
 			inventory.SetActive(false);
 	}
     void OnEnable()
