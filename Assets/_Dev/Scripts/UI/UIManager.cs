@@ -6,8 +6,8 @@ public class UIManager : MonoBehaviour
 	public InventoryManager inventoryManager;
 	public DialogueManager dialogueManager;
 	[Header("References")]
-	[SerializeField] GameObject dialogue;
-	[SerializeField] GameObject inventory;
+    public GameObject dialogue;
+    public GameObject inventory;
 	void Awake()
 	{
 		if(Instance==null)
@@ -40,10 +40,10 @@ public class UIManager : MonoBehaviour
 		else
 			InputManager.Instance.SetPlayerStatePlayer();
     }
-	public void ToggleDialogue()
+	public void SetActivePanel(GameObject panel, bool wantsToBeActive=true)
 	{
-		dialogue.SetActive(!dialogue.activeSelf);
-        if(dialogue.activeSelf)
+        panel.SetActive(wantsToBeActive);
+        if(panel.activeSelf)
             InputManager.Instance.SetPlayerStateUI();
         else
             InputManager.Instance.SetPlayerStatePlayer();

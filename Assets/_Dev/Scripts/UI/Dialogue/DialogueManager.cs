@@ -23,8 +23,8 @@ public class DialogueManager : MonoBehaviour
 			EndDialogue();
 			return;
 		}
-		UIManager.Instance.ToggleDialogue();
-		currentDialogue=newDialogue;
+        UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue);
+        currentDialogue=newDialogue;
 		dialogueIndex=0;
 		DisplayCurrentLine();
 	}
@@ -59,11 +59,10 @@ public class DialogueManager : MonoBehaviour
 	void ShowChoices()
 	{
 		HideChoices();
-		int count=Mathf.Min(choices.Length, currentDialogue.choices.Count);
-		for(int i=0; i<count; i++)
+		for(int i=0; i<Mathf.Min(choices.Length, currentDialogue.choices.Count); i++)
 		{
 			choices[i].SetActive(true);
-			TextMeshProUGUI choiceText=choices[i].GetComponentInChildren<TextMeshProUGUI>();
+			TextMeshProUGUI choiceText=choices[i].GetComponent<TextMeshProUGUI>();
 			if(choiceText!=null)
 				choiceText.text=currentDialogue.choices[i].text;
 		}
@@ -74,9 +73,9 @@ public class DialogueManager : MonoBehaviour
 			return;
 		if(choiceIndex<0 || choiceIndex>=currentDialogue.choices.Count)
 			return;
+		currentDialogue.choices[choiceIndex].onSelected.Invoke();
 		DialogueNode nextNode=currentDialogue.choices[choiceIndex].nextNode;
 		HideChoices();
-		UIManager.Instance.ToggleDialogue();
 		if(nextNode==null)
 		{
 			EndDialogue();
@@ -103,8 +102,8 @@ public class DialogueManager : MonoBehaviour
 	}
 	void EndDialogue()
 	{
-		UIManager.Instance.ToggleDialogue();
-		currentDialogue=null;
+        UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue, false);
+        currentDialogue=null;
 		dialogueIndex=0;
 		dialogueText.text="";
 		portraitImage.sprite=null;

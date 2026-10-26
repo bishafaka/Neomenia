@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
-  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -67,7 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bbe9d0664b08924f9d3f1f9263ba858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC
-  dialogue: {fileID: 11400000, guid: f02c80f7a69a787489c2a860aa26a318, type: 2}
+  casualDialogues: []
+  questDialogues: []
+  eventDialogues: []
 --- !u!1 &5556713695869145115
 GameObject:
   m_ObjectHideFlags: 0
