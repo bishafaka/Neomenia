@@ -6,9 +6,11 @@ public class DialogueManager : MonoBehaviour
 {
 	public DialogueNode currentDialogue;
 	[Header("References")]
-	[SerializeField] TextMeshProUGUI nameText;
-	[SerializeField] TextMeshProUGUI dialogueText;
+	[SerializeField] GameObject nameHolder;
+    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] TextMeshProUGUI dialogueText;
 	[SerializeField] Image portraitImage;
+	[SerializeField] GameObject choiceHolder;
 	[SerializeField] GameObject[] choices;
 	int dialogueIndex;
 	void Awake()
@@ -59,7 +61,8 @@ public class DialogueManager : MonoBehaviour
 	void ShowChoices()
 	{
 		HideChoices();
-		for(int i=0; i<Mathf.Min(choices.Length, currentDialogue.choices.Count); i++)
+        choiceHolder.SetActive(true);
+        for(int i=0; i<Mathf.Min(choices.Length, currentDialogue.choices.Count); i++)
 		{
 			choices[i].SetActive(true);
 			TextMeshProUGUI choiceText=choices[i].GetComponent<TextMeshProUGUI>();
@@ -85,7 +88,8 @@ public class DialogueManager : MonoBehaviour
 	}
 	void HideChoices()
 	{
-		foreach(GameObject choice in choices)
+		choiceHolder.SetActive(false);
+        foreach(GameObject choice in choices)
 		{
 			if(choice!=null)
 				choice.SetActive(false);
@@ -110,6 +114,10 @@ public class DialogueManager : MonoBehaviour
 	}
 	void SetValues(string name, string dialogue, Sprite portrait)
 	{
+        if(name=="")
+			nameHolder.SetActive(false);
+		else
+			nameHolder.SetActive(true);
 		nameText.text=name;
 		dialogueText.text=dialogue;
 		portraitImage.sprite=portrait;
