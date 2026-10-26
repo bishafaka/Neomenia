@@ -3386,28 +3386,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1837822711716882955, guid: 32cdf12e75a4b40499b3db31da92afb9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6249143917176355019}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9041740966439436272, guid: 32cdf12e75a4b40499b3db31da92afb9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 789323088704422983}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32cdf12e75a4b40499b3db31da92afb9, type: 3}
 --- !u!1 &1515176709615976324 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9041740966439436272, guid: 32cdf12e75a4b40499b3db31da92afb9, type: 3}
   m_PrefabInstance: {fileID: 7528974798897201268}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &789323088704422983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515176709615976324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34c71ea683891cb488b3685a59d6f806, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueBehavoiurs
 --- !u!114 &2760555748719605835 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5634913957526042687, guid: 32cdf12e75a4b40499b3db31da92afb9, type: 3}
