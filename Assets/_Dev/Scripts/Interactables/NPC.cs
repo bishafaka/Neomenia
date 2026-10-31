@@ -3,41 +3,43 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-	[Header("Flags")]
+	[Header("Stats")]
 	public bool haveTheyMetYet=false;
+	public int hearts=0;
+	[Header("Dialogues")]
 	[SerializeField] DialogueNode firstMeetingDialogue;
 	[SerializeField] List<DialogueNode> casualDialogues=new List<DialogueNode>();
-	[SerializeField] List<QuestDialogueNode> questDialogues=new List<QuestDialogueNode>();
+	[SerializeField] List<DialogueNode> questDialogues=new List<DialogueNode>();
 	[SerializeField] List<DialogueNode> eventDialogues=new List<DialogueNode>();
-	public int hearts=0;
 	public void SetDialogue()
 	{
-		if(!haveTheyMetYet)
+		//FIRST MEETING
+		if(!haveTheyMetYet && firstMeetingDialogue!=null)
 		{
-			if(firstMeetingDialogue!=null)
-			{
-				firstMeetingDialogue=NPCManager.Instance.SetNPCDialogue(this, firstMeetingDialogue);
-				return;
-			}
+			NPCManager.Instance.SetNPCDialogue(this, firstMeetingDialogue);
+			return;
 		}
-		if(questDialogues.Count<=0)
+		//QUESTS
+		for(int i=0; i<questDialogues.Count; i++)
 		{
-			for(int i=0; i<questDialogues.Count; i++)
-			{
-				if(questDialogues[i]==null)
-					continue;
-				if(HasRequiredItems(questDialogues[i]))
-				{
-					questDialogues[i]=NPCManager.Instance.SetNPCDialogue(this, questDialogues[i]);
-					questDialogues.RemoveAt(i);
-					return;
-				}
-			}
+			if(questDialogues[i]==null)
+				continue;
+			NPCManager.Instance.SetNPCDialogue(this, questDialogues[i]);
+			return;
 		}
-		if(casualDialogues.Count<=0)
+		//EVENTS
+		for(int i=0; i<eventDialogues.Count; i++)
+		{
+			if(eventDialogues[i]==null)
+				continue;
+			NPCManager.Instance.SetNPCDialogue(this, eventDialogues[i]);
+			return;
+		}
+		//CASUAL
+		if(casualDialogues.Count>0)
 		{
 			int randomIndex=Random.Range(0, casualDialogues.Count);
-			casualDialogues[randomIndex]=NPCManager.Instance.SetNPCDialogue(this, casualDialogues[randomIndex]);
+			NPCManager.Instance.SetNPCDialogue(this, casualDialogues[randomIndex]);
 		}
 	}
 	void OnTriggerEnter(Collider other)
@@ -49,11 +51,5 @@ public class NPC : MonoBehaviour
 	{
 		if(other.CompareTag("Player"))
 			other.GetComponent<PlayerInteract>().SetInteractable(null);
-	}
-	bool HasRequiredItems(QuestDialogueNode quest)
-	{
-		if(UIManager.Instance.inventoryManager.GetItemCount(quest.requiredItem)<quest.requiredAmount)
-			return false;
-		return true;
 	}
 }

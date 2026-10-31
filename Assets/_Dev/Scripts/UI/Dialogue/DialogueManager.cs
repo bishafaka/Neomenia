@@ -1,55 +1,114 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class DialogueManager : MonoBehaviour
 {
 	public DialogueNode currentDialogue;
+	[SerializeField] float letterSpeed=.06f;
+	[SerializeField] float clickCooldown=.25f;
 	[Header("References")]
 	[SerializeField] GameObject nameHolder;
-    [SerializeField] TextMeshProUGUI nameText;
-    [SerializeField] TextMeshProUGUI dialogueText;
+	[SerializeField] TextMeshProUGUI nameText;
+	[SerializeField] TextMeshProUGUI dialogueText;
 	[SerializeField] Image portraitImage;
 	[SerializeField] GameObject choiceHolder;
 	[SerializeField] GameObject[] choices;
+	float nextClickTime;
 	int dialogueIndex;
+	Coroutine typingCoroutine;
+	bool isTyping;
 	void Awake()
 	{
 		HideChoices();
 	}
 	public void StartDialogue(DialogueNode newDialogue)
 	{
+		StopTyping();
 		HideChoices();
 		if(newDialogue==null)
 		{
 			EndDialogue();
 			return;
 		}
-        UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue);
-        currentDialogue=newDialogue;
+		UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue);
+		currentDialogue=newDialogue;
 		dialogueIndex=0;
+		nextClickTime=Time.unscaledTime+clickCooldown;
 		DisplayCurrentLine();
 	}
 	void DisplayCurrentLine()
 	{
 		if(currentDialogue==null)
 			return;
+		NPC npc=NPCManager.Instance.GetCurrentNPC();
 		if(dialogueIndex<currentDialogue.dialogue.Count)
 		{
 			Dialogue line=currentDialogue.dialogue[dialogueIndex];
-			SetValues(line.name, line.text, line.sprite);
+			SetValues(GameVariables.Instance.ReplaceVariables(line.name), GameVariables.Instance.ReplaceVariables(line.text), line.sprite);
+			return;
 		}
-		else
-			ShowChoicesOrEnd();
+		ShowChoicesOrEnd();
 	}
 	public void NextDialogue()
 	{
-		if(currentDialogue==null)
+		if(Time.unscaledTime<nextClickTime)
 			return;
-		if(AreChoicesVisible())
+		if(currentDialogue==null || AreChoicesVisible())
 			return;
+		nextClickTime=Time.unscaledTime+clickCooldown;
+		if(isTyping)
+		{
+			CompleteTyping();
+			return;
+		}
 		dialogueIndex++;
 		DisplayCurrentLine();
+	}
+	void SetValues(string name, string dialogue, Sprite portrait)
+	{
+		StopTyping();
+		nameHolder.SetActive(!string.IsNullOrEmpty(name));
+		nameText.text=name;
+		dialogueText.text=dialogue;
+		portraitImage.sprite=portrait;
+		typingCoroutine=StartCoroutine(TypeText());
+	}
+	IEnumerator TypeText()
+	{
+		isTyping=true;
+		dialogueText.ForceMeshUpdate();
+		TMP_TextInfo textInfo=dialogueText.textInfo;
+		int totalCharacters=textInfo.characterCount;
+		dialogueText.maxVisibleCharacters=0;
+		for(int i=0; i<totalCharacters; i++)
+		{
+			dialogueText.maxVisibleCharacters=i+1;
+			yield return new WaitForSeconds(letterSpeed);
+		}
+		dialogueText.maxVisibleCharacters=totalCharacters;
+		isTyping=false;
+		typingCoroutine=null;
+	}
+	void CompleteTyping()
+	{
+		if(typingCoroutine!=null)
+		{
+			StopCoroutine(typingCoroutine);
+			typingCoroutine=null;
+		}
+		dialogueText.maxVisibleCharacters=int.MaxValue;
+		isTyping=false;
+	}
+	void StopTyping()
+	{
+		if(typingCoroutine!=null)
+		{
+			StopCoroutine(typingCoroutine);
+			typingCoroutine=null;
+		}
+		isTyping=false;
 	}
 	void ShowChoicesOrEnd()
 	{
@@ -61,13 +120,21 @@ public class DialogueManager : MonoBehaviour
 	void ShowChoices()
 	{
 		HideChoices();
-        choiceHolder.SetActive(true);
-        for(int i=0; i<Mathf.Min(choices.Length, currentDialogue.choices.Count); i++)
+		choiceHolder.SetActive(true);
+		NPC npc=NPCManager.Instance.GetCurrentNPC();
+		for(int i=0; i<Mathf.Min(choices.Length, currentDialogue.choices.Count); i++)
 		{
+			DialogueChoice choice=currentDialogue.choices[i];
+			bool available=choice.CanSelect(npc);
+			if(!available && !choice.showIfUnavailable)
+				continue;
 			choices[i].SetActive(true);
-			TextMeshProUGUI choiceText=choices[i].GetComponent<TextMeshProUGUI>();
+			Button button=choices[i].GetComponent<Button>();
+			if(button!=null)
+				button.interactable=available;
+			TextMeshProUGUI choiceText=choices[i].GetComponentInChildren<TextMeshProUGUI>();
 			if(choiceText!=null)
-				choiceText.text=currentDialogue.choices[i].text;
+				choiceText.text=GameVariables.Instance.ReplaceVariables(available ? choice.text : choice.unavailableText);
 		}
 	}
 	public void SelectChoice(int choiceIndex)
@@ -76,8 +143,11 @@ public class DialogueManager : MonoBehaviour
 			return;
 		if(choiceIndex<0 || choiceIndex>=currentDialogue.choices.Count)
 			return;
-		currentDialogue.choices[choiceIndex].onSelected.Invoke();
-		DialogueNode nextNode=currentDialogue.choices[choiceIndex].nextNode;
+		DialogueChoice choice=currentDialogue.choices[choiceIndex];
+		if(!choice.CanSelect(NPCManager.Instance.GetCurrentNPC()))
+			return;
+		choice.onSelected.Invoke();
+		DialogueNode nextNode=choice.nextNode;
 		HideChoices();
 		if(nextNode==null)
 		{
@@ -89,10 +159,15 @@ public class DialogueManager : MonoBehaviour
 	void HideChoices()
 	{
 		choiceHolder.SetActive(false);
-        foreach(GameObject choice in choices)
+		foreach(GameObject choice in choices)
 		{
 			if(choice!=null)
+			{
 				choice.SetActive(false);
+				Button button=choice.GetComponent<Button>();
+				if(button!=null)
+					button.interactable=true;
+			}
 		}
 	}
 	bool AreChoicesVisible()
@@ -106,20 +181,13 @@ public class DialogueManager : MonoBehaviour
 	}
 	void EndDialogue()
 	{
-        UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue, false);
-        currentDialogue=null;
+		StopTyping();
+		UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue, false);
+		currentDialogue=null;
 		dialogueIndex=0;
 		dialogueText.text="";
+		dialogueText.maxVisibleCharacters=int.MaxValue;
 		portraitImage.sprite=null;
-	}
-	void SetValues(string name, string dialogue, Sprite portrait)
-	{
-        if(name=="")
-			nameHolder.SetActive(false);
-		else
-			nameHolder.SetActive(true);
-		nameText.text=name;
-		dialogueText.text=dialogue;
-		portraitImage.sprite=portrait;
+		NPCManager.Instance.ResetNPCDialogue();
 	}
 }

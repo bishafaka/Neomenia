@@ -7,12 +7,16 @@ public class NPCManager : MonoBehaviour
 	DialogueNode currentDialogue;
 	int maxHearts=10;
 	int minHearts=-10;
+	public NPC GetCurrentNPC()
+	{
+		return currentNPC;
+	}
 	void Awake()
 	{
-		if (Instance==null)
+		if(Instance==null)
 		{
 			Instance=this;
-			DontDestroyOnLoad(this);
+			DontDestroyOnLoad(gameObject);
 		}
 		else
 			Destroy(gameObject);
@@ -22,26 +26,22 @@ public class NPCManager : MonoBehaviour
 		currentNPC=npc;
 		currentDialogue=dialogue;
 		UIManager.Instance.dialogueManager.StartDialogue(currentDialogue);
-		return null;
+		return dialogue;
 	}
-    public QuestDialogueNode SetNPCDialogue(NPC npc, QuestDialogueNode dialogue)
-    {
-        currentNPC=npc;
-        currentDialogue=dialogue;
-        UIManager.Instance.dialogueManager.StartDialogue(currentDialogue);
-        return null;
-    }
-    public void	ResetNPCDialogue()
+	public void ResetNPCDialogue()
 	{
 		currentNPC=null;
 		currentDialogue=null;
 	}
 	public void ChangeHearts(int amount)
 	{
+		if(currentNPC==null)
+			return;
 		currentNPC.hearts=Mathf.Clamp(currentNPC.hearts+amount, minHearts, maxHearts);
 	}
 	public void UpdateMeetState()
 	{
-        currentNPC.haveTheyMetYet=true;
-    }
+		if(currentNPC!=null)
+			currentNPC.haveTheyMetYet=true;
+	}
 }
