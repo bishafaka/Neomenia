@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameVariables : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-	public static GameVariables Instance { get; private set; }
+	public static GameManager Instance { get; private set; }
 	[Serializable]
 	public class StringVariable
 	{
@@ -38,15 +38,15 @@ public class GameVariables : MonoBehaviour
 	[Header("Bool Variables")]
 	public List<BoolVariable> boolVariables=new();
 	[Header("JSON")]
-	[SerializeField] string fileName="gameVariables.json";
+	[SerializeField] string fileName="gameManager.json";
 	string SavePath=>System.IO.Path.Combine(Application.persistentDataPath, fileName);
 	[Serializable]
 	class VariablesData
 	{
-		public List<StringVariable> strings=new();
-		public List<IntVariable> ints=new();
-		public List<FloatVariable> floats=new();
-		public List<BoolVariable> bools=new();
+		public List<StringVariable> strings=new List<StringVariable>();
+		public List<IntVariable> ints=new List<IntVariable>();
+		public List<FloatVariable> floats=new List<FloatVariable>();
+		public List<BoolVariable> bools=new List<BoolVariable>();
 	}
 	void Awake()
 	{
@@ -196,10 +196,10 @@ public class GameVariables : MonoBehaviour
 		VariablesData data=JsonUtility.FromJson<VariablesData>(json);
 		if(data==null)
 			return;
-		stringVariables=data.strings ?? new();
-		intVariables=data.ints ?? new();
-		floatVariables=data.floats ?? new();
-		boolVariables=data.bools ?? new();
+		stringVariables=data.strings ?? new List<StringVariable>();
+		intVariables=data.ints ?? new List<IntVariable>();
+		floatVariables=data.floats ?? new List<FloatVariable>();
+		boolVariables=data.bools ?? new List<BoolVariable>();
 	}
 	public void ResetVariables()
 	{

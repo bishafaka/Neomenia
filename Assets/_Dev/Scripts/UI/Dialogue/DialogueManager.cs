@@ -46,7 +46,7 @@ public class DialogueManager : MonoBehaviour
 		if(dialogueIndex<currentDialogue.dialogue.Count)
 		{
 			Dialogue line=currentDialogue.dialogue[dialogueIndex];
-			SetValues(GameVariables.Instance.ReplaceVariables(line.name), GameVariables.Instance.ReplaceVariables(line.text), line.sprite);
+			SetValues(GameManager.Instance.ReplaceVariables(line.name), GameManager.Instance.ReplaceVariables(line.text), line.sprite);
 			return;
 		}
 		ShowChoicesOrEnd();
@@ -134,7 +134,7 @@ public class DialogueManager : MonoBehaviour
 				button.interactable=available;
 			TextMeshProUGUI choiceText=choices[i].GetComponentInChildren<TextMeshProUGUI>();
 			if(choiceText!=null)
-				choiceText.text=GameVariables.Instance.ReplaceVariables(available ? choice.text : choice.unavailableText);
+				choiceText.text=GameManager.Instance.ReplaceVariables(available ? choice.text : choice.unavailableText);
 		}
 	}
 	public void SelectChoice(int choiceIndex)

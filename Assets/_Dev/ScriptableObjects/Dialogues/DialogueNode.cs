@@ -30,13 +30,13 @@ public class DialogueCondition
 			case ConditionType.HeartsEquals:
 				return npc!=null && npc.hearts==value;
 			case ConditionType.BoolVariable:
-				return GameVariables.Instance.GetBool(variableName)==boolValue;
+				return GameManager.Instance.GetBool(variableName)==boolValue;
 			case ConditionType.IntVariable:
-				return GameVariables.Instance.GetInt(variableName)==value;
+				return GameManager.Instance.GetInt(variableName)==value;
 			case ConditionType.QuestCompleted:
-				return GameVariables.Instance.GetBool(variableName);
+				return GameManager.Instance.GetBool(variableName);
 			case ConditionType.QuestNotCompleted:
-				return !GameVariables.Instance.GetBool(variableName);
+				return !GameManager.Instance.GetBool(variableName);
 		}
 		return true;
 	}
@@ -77,8 +77,8 @@ public class DialogueChoice
 	public string GetDisplayText(NPC npc)
 	{
 		if(!CanSelect(npc))
-			return GameVariables.Instance.ReplaceVariables(unavailableText);
-		return GameVariables.Instance.ReplaceVariables(text);
+			return GameManager.Instance.ReplaceVariables(unavailableText);
+		return GameManager.Instance.ReplaceVariables(text);
 	}
 }
 public enum ConditionMode{All, Any}
@@ -105,10 +105,10 @@ public class DialogueNode : ScriptableObject
 	}
 	public void SetBoolEvent(string variable)
 	{
-		GameVariables.Instance.SetBool(variable, true);
+		GameManager.Instance.SetBool(variable, true);
 	}
 	public void AddIntEvent(string variable)
 	{
-		GameVariables.Instance.AddInt(variable, 1);
+		GameManager.Instance.AddInt(variable, 1);
 	}
 }

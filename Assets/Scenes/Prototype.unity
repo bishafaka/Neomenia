@@ -585,41 +585,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1182212726}
-  - component: {fileID: 1182212725}
+  - component: {fileID: 1182212727}
   m_Layer: 0
-  m_Name: GameEssentials
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1182212725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1182212724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8207f9ad239f75b4b9df0ba3fa125f5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueVariables
-  stringVariables:
-  - key: player-name
-    value: Almar
-  - key: pronoun-subject
-    value: they
-  - key: pronoun-object
-    value: them
-  - key: pronoun-possessive
-    value: their
-  - key: pronoun-reflexive
-    value: themselves
-  intVariables: []
-  floatVariables: []
-  boolVariables: []
-  fileName: gameVariables.json
 --- !u!4 &1182212726
 Transform:
   m_ObjectHideFlags: 0
@@ -635,6 +608,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1182212727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182212724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178c52c8e01e6b14496e485660d3d543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  stringVariables: []
+  intVariables: []
+  floatVariables: []
+  boolVariables: []
+  fileName: gameManager.json
+--- !u!1 &1777992774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5091972025472092654, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+  m_PrefabInstance: {fileID: 1922930810767179462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1245314016860120832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -752,10 +747,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3647809549184455908, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: nameAndPronouns
+      value: 
+      objectReference: {fileID: 1777992774}
     - target: {fileID: 3926903327004173790, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1182212725}
+      objectReference: {fileID: 1182212727}
+    - target: {fileID: 3926903327004173790, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetPronouns
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926903327004173790, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5074532157651918588, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -787,7 +794,15 @@ PrefabInstance:
     - target: {fileID: 6562357663346524876, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1182212725}
+      objectReference: {fileID: 1182212727}
+    - target: {fileID: 6562357663346524876, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetPlayerName
+      objectReference: {fileID: 0}
+    - target: {fileID: 6562357663346524876, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6832819444772629644, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -943,11 +958,27 @@ PrefabInstance:
     - target: {fileID: 8797676971219010117, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1182212725}
+      objectReference: {fileID: 1182212727}
+    - target: {fileID: 8797676971219010117, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetPronouns
+      objectReference: {fileID: 0}
+    - target: {fileID: 8797676971219010117, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 9017923581130648678, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1182212725}
+      objectReference: {fileID: 1182212727}
+    - target: {fileID: 9017923581130648678, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetPronouns
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017923581130648678, guid: 817c496517faf7043806a6a22bfdb295, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
