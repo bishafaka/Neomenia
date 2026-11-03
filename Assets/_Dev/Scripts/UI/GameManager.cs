@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-20)]
 public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance { get; private set; }
@@ -60,17 +61,13 @@ public class GameManager : MonoBehaviour
 		Load();
 		Debug.Log(Application.persistentDataPath);
 	}
-	public void SetPlayerName(string value)
-	{
-		SetString("player-name", value);
-	}
-	public void SetPronouns(int value)
+	public void SetPlayerInfo(string name, int pronoun)
 	{
 		string pronounSubject;
 		string pronounObject;
 		string pronounPossessive;
 		string pronounReflexive;
-		switch(value)
+		switch(pronoun)
 		{
 			case 1:
 				pronounSubject="he";
@@ -91,6 +88,7 @@ public class GameManager : MonoBehaviour
 				pronounReflexive="themselves";
 				break;
 		}
+		SetString("player-name", name);
 		SetString("pronoun-subject", pronounSubject);
 		SetString("pronoun-object", pronounObject);
 		SetString("pronoun-possessive", pronounPossessive);

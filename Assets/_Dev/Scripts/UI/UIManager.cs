@@ -6,8 +6,9 @@ public class UIManager : MonoBehaviour
 	public InventoryManager inventoryManager;
 	public DialogueManager dialogueManager;
 	[Header("References")]
-    public GameObject dialogue;
-    public GameObject inventory;
+	public GameObject dialogue;
+	public GameObject inventory;
+	public GameObject playerIntro;
 	void Awake()
 	{
 		if(Instance==null)
@@ -19,8 +20,15 @@ public class UIManager : MonoBehaviour
 			Destroy(gameObject);
 		if(inventory!=null)
 			inventory.SetActive(false);
-		if(dialogue != null)
+		if(dialogue!=null)
 			dialogue.SetActive(false);
+		if(playerIntro!=null)
+		{
+			if(GameManager.Instance.GetString("player-name")=="")
+				SetActivePanel(playerIntro);
+			else
+				SetActivePanel(playerIntro, false);
+		}
 	}
 	void OnEnable()
 	{
@@ -35,17 +43,17 @@ public class UIManager : MonoBehaviour
 	void ToggleInventory()
 	{
 		inventory.SetActive(!inventory.activeSelf);
-        if(inventory.activeSelf)
-            InputManager.Instance.SetPlayerStateUI();
+		if(inventory.activeSelf)
+			InputManager.Instance.SetPlayerStateUI();
 		else
 			InputManager.Instance.SetPlayerStatePlayer();
-    }
+	}
 	public void SetActivePanel(GameObject panel, bool wantsToBeActive=true)
 	{
-        panel.SetActive(wantsToBeActive);
-        if(panel.activeSelf)
-            InputManager.Instance.SetPlayerStateUI();
-        else
-            InputManager.Instance.SetPlayerStatePlayer();
-    }
+		panel.SetActive(wantsToBeActive);
+		if(panel.activeSelf)
+			InputManager.Instance.SetPlayerStateUI();
+		else
+			InputManager.Instance.SetPlayerStatePlayer();
+	}
 }
