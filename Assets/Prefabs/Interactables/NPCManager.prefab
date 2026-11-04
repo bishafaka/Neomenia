@@ -53,10 +53,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4760864127973210707}
     m_Modifications:
-    - target: {fileID: 1196745736177081439, guid: 3b8a05875b7b83849983774cc2ca5815, type: 3}
-      propertyPath: firstMeetingDialogue
-      value: 
-      objectReference: {fileID: 11400000, guid: 60a36cbc35fcf4f4cadd28895692fe03, type: 2}
     - target: {fileID: 1403642066923298802, guid: 3b8a05875b7b83849983774cc2ca5815, type: 3}
       propertyPath: m_Name
       value: Mao
