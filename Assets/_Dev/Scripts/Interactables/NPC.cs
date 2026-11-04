@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class NPC : Interactable
 {
 	[Header("Stats")]
 	public bool haveTheyMetYet=false;
@@ -41,15 +41,5 @@ public class NPC : MonoBehaviour
 			int randomIndex=Random.Range(0, casualDialogues.Count);
 			NPCManager.Instance.SetNPCDialogue(this, casualDialogues[randomIndex]);
 		}
-	}
-	void OnTriggerEnter(Collider other)
-	{
-		if(other.CompareTag("Player"))
-			other.GetComponent<PlayerInteract>().SetInteractable(gameObject);
-	}
-	void OnTriggerExit(Collider other)
-	{
-		if(other.CompareTag("Player"))
-			other.GetComponent<PlayerInteract>().SetInteractable(null);
 	}
 }

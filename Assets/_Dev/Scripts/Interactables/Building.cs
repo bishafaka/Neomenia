@@ -1,16 +1,6 @@
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class Building : Interactable
 {
 	public Transform entranceTransform;
-	void OnTriggerEnter(Collider other)
-	{
-		if(other.CompareTag("Player"))
-			other.GetComponent<PlayerInteract>().SetInteractable(gameObject);
-	}
-	void OnTriggerExit(Collider other)
-	{
-		if(other.CompareTag("Player"))
-			other.GetComponent<PlayerInteract>().SetInteractable(null);
-	}
 }
