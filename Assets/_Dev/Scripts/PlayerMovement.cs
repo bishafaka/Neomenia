@@ -1,16 +1,11 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : PlayerController
 {
 	[SerializeField] float speed=5f;
 	[SerializeField] float sprintMultiplier=1.5f;
 	Vector2 input;
 	bool isSprint=false;
-	CharacterController characterController;
-    void Awake()
-    {
-        characterController=GetComponent<CharacterController>();
-    }
     void OnEnable()
 	{
 		if(InputManager.Instance!=null)

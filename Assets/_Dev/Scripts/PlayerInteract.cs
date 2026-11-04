@@ -1,13 +1,8 @@
 using UnityEngine;
 
-public class PlayerInteract : MonoBehaviour
+public class PlayerInteract : PlayerController
 {
 	GameObject interactableInside=null;
-	CharacterController characterController;
-	void Awake()
-	{
-		characterController=GetComponent<CharacterController>();
-	}
 	void OnEnable()
 	{
 		if(InputManager.Instance!=null)
