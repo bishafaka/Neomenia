@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0, g: 0, b: 1, a: 1}
-  m_AmbientEquatorColor: {r: 1, g: 1, b: 0.6839622, a: 1}
-  m_AmbientGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientSkyColor: {r: 0.199, g: 0.5, b: 1, a: 1}
+  m_AmbientEquatorColor: {r: 0.5471698, g: 0.5053243, b: 0.28132787, a: 1}
+  m_AmbientGroundColor: {r: 0.5450981, g: 0.2705882, b: 0.07450981, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 1
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -191,7 +191,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_ColorTemperature: 6271
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -709,6 +709,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1332288914137068765, guid: b93911cb8b457964daf1fb6c632f00a4, type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1332288914137068765, guid: b93911cb8b457964daf1fb6c632f00a4, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.8301887
+      objectReference: {fileID: 0}
+    - target: {fileID: 1332288914137068765, guid: b93911cb8b457964daf1fb6c632f00a4, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.59131366
+      objectReference: {fileID: 0}
+    - target: {fileID: 1332288914137068765, guid: b93911cb8b457964daf1fb6c632f00a4, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.59131366
+      objectReference: {fileID: 0}
     - target: {fileID: 7074208656737592104, guid: b93911cb8b457964daf1fb6c632f00a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -903,6 +919,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: greetDialogue.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: eventDialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: questDialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: casualDialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: 'greetDialogue.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3e8fddd4a77212047899dff80fae72f5, type: 2}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: 'greetDialogue.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 6a3fc14389d4b704a80654be35e7be59, type: 2}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: 'greetDialogue.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c8e222e212193594ea2ba4eb53fd4576, type: 2}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: 'eventDialogues.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 63b6127bb7b0949469de873c5076b88b, type: 2}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: followUpDialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: 'questDialogues.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e0e9630b90e66148bb660730a871ace, type: 2}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: 'casualDialogues.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ceae6f86bd612714d9dc26e708300dae, type: 2}
+    - target: {fileID: 4955684426448345952, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
+      propertyPath: 'followUpDialogues.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 24ac303d3f63da34ab2d4f1279385d3f, type: 2}
     - target: {fileID: 6243268242047464240, guid: f7ccce7dfc77eac4d94c64c783c6b40a, type: 3}
       propertyPath: m_Name
       value: NPCManager

@@ -20,7 +20,7 @@ public class PlayerInteract : PlayerController
 		if(interactableInside.CompareTag("NPC"))
 		{
 			InputManager.Instance.SetPlayerStateUI();
-			interactableInside.GetComponent<NPC>().SetDialogue();
+			interactableInside.GetComponent<NPC>().NPCGreet();
 		}
 		if(interactableInside.CompareTag("Building"))
 		{

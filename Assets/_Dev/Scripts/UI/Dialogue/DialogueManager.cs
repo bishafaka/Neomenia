@@ -141,14 +141,17 @@ public class DialogueManager : MonoBehaviour
 	{
 		if(currentDialogue==null)
 			return;
-		if(choiceIndex<0 || choiceIndex>=currentDialogue.choices.Count)
+		if(choiceIndex<0||choiceIndex>=currentDialogue.choices.Count)
 			return;
+		DialogueNode originalDialogue=currentDialogue;
 		DialogueChoice choice=currentDialogue.choices[choiceIndex];
 		if(!choice.CanSelect(NPCManager.Instance.GetCurrentNPC()))
 			return;
-		choice.onSelected.Invoke();
 		DialogueNode nextNode=choice.nextNode;
 		HideChoices();
+		choice.onSelected.Invoke();
+		if(currentDialogue!=originalDialogue)
+			return;
 		if(nextNode==null)
 		{
 			EndDialogue();
@@ -182,12 +185,18 @@ public class DialogueManager : MonoBehaviour
 	void EndDialogue()
 	{
 		StopTyping();
-		UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue, false);
-		currentDialogue=null;
-		dialogueIndex=0;
-		dialogueText.text="";
-		dialogueText.maxVisibleCharacters=int.MaxValue;
-		portraitImage.sprite=null;
-		NPCManager.Instance.ResetNPCDialogue();
+		DialogueNode nextNode=currentDialogue.nextNode;
+		if(nextNode==null)
+		{
+			UIManager.Instance.SetActivePanel(UIManager.Instance.dialogue, false);
+			currentDialogue=null;
+			dialogueIndex=0;
+			dialogueText.text="";
+			dialogueText.maxVisibleCharacters=int.MaxValue;
+			portraitImage.sprite=null;
+			NPCManager.Instance.ResetNPCDialogue();
+			return;
+		}
+		StartDialogue(nextNode);
 	}
 }

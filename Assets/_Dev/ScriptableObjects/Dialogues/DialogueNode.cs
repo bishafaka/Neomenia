@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
+//DIALOGUE CONDITION
 public enum ConditionType{HasItem, DoesNotHaveItem, HeartsGreaterThan, HeartsLessThan, HeartsEquals, BoolVariable, IntVariable, QuestCompleted, QuestNotCompleted}
 [System.Serializable]
 public class DialogueCondition
@@ -82,6 +83,7 @@ public class DialogueChoice
 	}
 }
 public enum ConditionMode{All, Any}
+//DIALOGUE NODE
 [System.Serializable]
 public class Dialogue
 {
@@ -94,6 +96,7 @@ public class Dialogue
 public class DialogueNode : ScriptableObject
 {
 	public List<Dialogue> dialogue=new();
+	public DialogueNode nextNode;
 	public List<DialogueChoice> choices=new();
 	public void ChangeHeartsEvent(int amount)
 	{
@@ -106,6 +109,10 @@ public class DialogueNode : ScriptableObject
 	public void SetBoolEvent(string variable)
 	{
 		GameManager.Instance.SetBool(variable, true);
+	}
+	public void SetNextDialogueEvent()
+	{
+		NPCManager.Instance.GetCurrentNPC().SetDialogue();
 	}
 	public void AddIntEvent(string variable)
 	{
